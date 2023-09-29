@@ -24,6 +24,7 @@ const style = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     paddingHorizontal: 20,
+    zIndex:100
     
     
   }
