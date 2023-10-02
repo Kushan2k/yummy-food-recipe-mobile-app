@@ -4,12 +4,9 @@ import { Button, StyleSheet, Text, View } from "react-native"
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      
-        
+    <View style={styles.container}> 
       <StatusBar style="auto" />
-      <Text>Home Screen</Text>
-      <Button title="Click Me" onPress={()=>{console.log('pressed!')}}/>
+      
         
       
     </View>
