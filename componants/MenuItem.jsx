@@ -1,17 +1,28 @@
-import { View, Text, StyleSheet,Dimensions, Image } from 'react-native'
+import { View, Text, StyleSheet,Dimensions, Image, Pressable } from 'react-native'
 import React from 'react'
 
 
-const width=Dimensions.get('window').width-40
-export default function MenuItem({item}) {
+
+export default function MenuItem({ item }) {
+  
+  
   return (
-    <View style={styles.container}>
-      <Image src={item.image} width={300} height={170} resizeMode='cover'  />
-      <View>
-        <Text style={styles.item}>{item.name}</Text>
-        <Text style={styles.item}>{item.description}</Text>
+    <Pressable
+      
+      onPress={() => {
+      console.log(item.id)
+    }}>
+      <View style={styles.container}>
+        <Image source={{uri:item.image}} width={150} height={170} resizeMode='cover'  />
+        <View style={{
+          padding: 10,
+          
+        }}>
+          <Text style={styles.title}>{item.name}</Text>
+          <Text style={styles.item}>{item.description}</Text>
+        </View>
       </View>
-    </View>
+    </Pressable>
   )
 }
 
@@ -24,13 +35,20 @@ const styles = StyleSheet.create({
     borderColor: '#FFF',
     paddingVertical: 10,
     paddingHorizontal: 5,
-    width: width,
+    width:'auto',
     height:200,
+    
+  },
+  title: {
+    color: 'white',
+    fontWeight: '900',
     
   },
   item: {
     color: 'white',
     fontWeight: '600',
-    
+    flexWrap: 'wrap',
+    marginTop:10,
   }
+
 })

@@ -9,6 +9,7 @@ export default function Main() {
     <FlatList
       
       bounces
+      refreshing
       data={data}
       style={{
         flex: 1,
