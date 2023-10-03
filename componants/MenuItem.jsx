@@ -1,5 +1,6 @@
-import { View, Text, StyleSheet,Dimensions, Image, Pressable } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
+import { router} from 'expo-router'
 
 
 
@@ -7,12 +8,13 @@ export default function MenuItem({ item }) {
   
   
   return (
-    <Pressable
-      
+    <TouchableOpacity
+      style={styles.container}
+      activeOpacity={0.5}
       onPress={() => {
-      console.log(item.id)
+        router.push(`/${item.id}`)
     }}>
-      <View style={styles.container}>
+      <View style={styles.containerinner}>
         <Image source={{uri:item.image}} width={150} height={170} resizeMode='cover'  />
         <View style={{
           padding: 10,
@@ -22,7 +24,7 @@ export default function MenuItem({ item }) {
           <Text style={styles.item}>{item.description}</Text>
         </View>
       </View>
-    </Pressable>
+    </TouchableOpacity>
   )
 }
 
@@ -35,13 +37,20 @@ const styles = StyleSheet.create({
     borderColor: '#FFF',
     paddingVertical: 10,
     paddingHorizontal: 5,
-    width:'auto',
+    width:'100%',
+    height:200,
+    
+  },
+  containerinner: {
+    flexDirection:'row',
+    width:'100%',
     height:200,
     
   },
   title: {
     color: 'white',
     fontWeight: '900',
+    flexWrap:'wrap',
     
   },
   item: {
