@@ -7,6 +7,7 @@ import { StatusBar } from 'expo-status-bar';
 export default function itemdetails() {
 
   const {id} = useGlobalSearchParams()
+  // const {id} = useGlobalSearchParams()
   
   
   return (
