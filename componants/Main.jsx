@@ -1,16 +1,21 @@
-import { View, Text, StyleSheet, FlatList, Button } from 'react-native'
+import {FlatList} from 'react-native'
 import React from 'react'
-import {data} from '../dymmydata.js'
+
 import MenuItem from './MenuItem.jsx'
+import { useSelector } from 'react-redux'
 
 
 export default function Main() {
+
+  const items = useSelector((state) => state.item)
+  
+  
   return (
     <FlatList
       
       bounces
       refreshing
-      data={data}
+      data={items}
       style={{
         flex: 1,
         zIndex:100
