@@ -7,7 +7,7 @@ const Reducer = createSlice({
   initialState,
   reducers: {
     load(state, action) {
-      console.log(action.payload)
+      // console.log(action.payload)
       return [...action.payload?.items]
     },
   },
