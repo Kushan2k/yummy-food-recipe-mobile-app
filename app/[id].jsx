@@ -1,9 +1,11 @@
-import { View, Text, ActivityIndicator,} from 'react-native'
+import { View, Text, ActivityIndicator, Pressable,} from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { Stack,  useGlobalSearchParams } from 'expo-router'
+import { Stack,  router,  useGlobalSearchParams } from 'expo-router'
 
 import { StatusBar } from 'expo-status-bar';
 import { useSelector } from 'react-redux';
+import { AntDesign } from '@expo/vector-icons';
+import DetailItem from '../componants/detailItem';
 
 export default function itemdetails() {
 
@@ -13,27 +15,40 @@ export default function itemdetails() {
   
   const data = useSelector(state => state.item)
 
-  let item
+  const [item,setitem]=useState({})
   
   useEffect(() => {
-    item = data.filter((i) => i.id === parseInt(id))[0]
-    console.log(item)
+    setitem(data.filter((i) => i.id === parseInt(id))[0])
     setloading(false)
-  },[id])
+  },[])
 
   
   return (
-    <View>
-      <StatusBar style='auto'/>
-      <Stack.Screen
-        options={{
-          headerShown: true,
-          title:"Name"
-        }}
-      />
+    <View style={{/*backgroundColor:'#000',*/flex: 1 }}>
+      <View style={{
+        position: 'absolute',
+        top: 50,
+        left: 20,
+        zIndex:200
+        
+      }}>
+        <Pressable style={{ marginHorizontal: 5 }} onPress={() => {
+                router.back()
+        }}>
+          <AntDesign name="arrowleft" size={24} color="black" />
+        </Pressable>
+      </View>
+
+      <StatusBar style='auto' />
+      
+      
       {
-        loading ? <ActivityIndicator size={40} color={'#000'} /> : (
-          <Text>hello world</Text>
+        loading ? (
+          <View style={{flex:1,justifyContent:'center',alignItems:'center',width:'100%',}}>
+            <ActivityIndicator size={40} color={'#FFF'} />
+          </View>
+        ) : (
+          <DetailItem item={item} />
         )
       }
       
