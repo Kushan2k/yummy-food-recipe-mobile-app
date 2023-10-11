@@ -24,7 +24,7 @@ export default function itemdetails() {
 
   
   return (
-    <View style={{/*backgroundColor:'#000',*/flex: 1 }}>
+    <View style={{backgroundColor:'#000',flex: 1 }}>
       <View style={{
         position: 'absolute',
         top: 50,
