@@ -30,7 +30,7 @@ export default function App() {
   return (
     <View style={styles.container}> 
       <StatusBar style="auto" />
-      <Header text={"Let's find you a preast."} />
+      <Header text={"Let's find you a cuisine."} />
       {
         loading ? (
           <View style={{
@@ -46,7 +46,7 @@ export default function App() {
           </View>
         ) : (
           <>
-            <Randomdish/>
+            {/* <Randomdish/> */}
             <Main />
           </>
         )

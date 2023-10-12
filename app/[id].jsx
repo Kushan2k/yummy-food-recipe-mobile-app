@@ -5,7 +5,7 @@ import { Stack,  router,  useGlobalSearchParams } from 'expo-router'
 import { StatusBar } from 'expo-status-bar';
 import { useSelector } from 'react-redux';
 import { AntDesign } from '@expo/vector-icons';
-import DetailItem from '../componants/detailItem';
+import DetailItem from '../componants/DetailItem';
 
 export default function itemdetails() {
 
@@ -35,7 +35,7 @@ export default function itemdetails() {
         <Pressable style={{ marginHorizontal: 5 }} onPress={() => {
                 router.back()
         }}>
-          <AntDesign name="arrowleft" size={24} color="black" />
+          <AntDesign name="arrowleft" size={24} color="white" />
         </Pressable>
       </View>
 

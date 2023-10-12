@@ -1,19 +1,28 @@
 import { View, Text, StyleSheet, Image } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import MenuItem from './MenuItem'
 
 export default function Randomdish() {
+
+  const items= useSelector(state => state.item)
+  
+  const [randomitem, setitem] = useState({})
+  
+  useEffect(() => {
+    const size = items.length
+    
+    const itemidex = Math.floor(Math.random() * 100) % size
+    
+    setitem(items[itemidex])
+
+  },[])
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Recipe of the day.</Text>
-      <View style={{ flexDirection: 'row',marginTop:10,marginHorizontal:5, }}>
-        <Image source={{ uri: 'https://img.freepik.com/free-photo/top-view-table-full-delicious-food-composition_23-2149141353.jpg' }} width={150} resizeMode='cover' height={150} crossOrigin='anonymous' />
-        
-        <View style={{paddingHorizontal:5,paddingVertical:5}}>
-          <Text style={styles.menuTitle}>Title</Text>
-          <Text style={styles.description}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum quia pariatur, et repudiandae quaerat nostrum exercitationem. Modi, sequi perspiciatis error illum aspernatur odio, reprehenderit accusamus dolorem sapiente, culpa sunt neque.
-          </Text>
-        </View>
+      <View style={{marginTop:10,marginHorizontal:5, }}>
+        <MenuItem item={randomitem} />
 
       </View>
     </View>
