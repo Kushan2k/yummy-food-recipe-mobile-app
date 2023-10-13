@@ -5,10 +5,8 @@ import Header from "../componants/Header"
 import Main from "../componants/Main"
 import Randomdish from "../componants/Randomdish"
 import { useDispatch } from "react-redux"
-
 import { useEffect, useState } from "react"
 import { load } from "../store/item_reducer"
-
 import { data } from '../dymmydata.js'
 
 export default function App() {
