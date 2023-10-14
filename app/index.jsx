@@ -10,11 +10,8 @@ import { load } from "../store/item_reducer"
 import { data } from '../dymmydata.js'
 
 export default function App() {
-
   const dispatch = useDispatch()
-  
   const [loading,setloading]=useState(true)
-
   useEffect(() => {
     
     setTimeout(() => {
