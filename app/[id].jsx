@@ -1,6 +1,6 @@
-import { View, Text, ActivityIndicator, Pressable,} from 'react-native'
+import { View,  ActivityIndicator, Pressable,} from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { Stack,  router,  useGlobalSearchParams } from 'expo-router'
+import {  router,  useGlobalSearchParams } from 'expo-router'
 
 import { StatusBar } from 'expo-status-bar';
 import { useSelector } from 'react-redux';
