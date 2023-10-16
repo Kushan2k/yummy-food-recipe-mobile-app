@@ -41,8 +41,11 @@ export default function App() {
           </View>
         ) : (
           <>
-            {/* <Randomdish/> */}
-            <Main />
+              {/* <Randomdish/> */}
+              <Text style={{ color: '#FFF', fontWeight: '900', letterSpacing: 2, }}>
+                Available Recipies
+              </Text>
+              <Main />
           </>
         )
       }
