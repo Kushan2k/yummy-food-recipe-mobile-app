@@ -1,6 +1,6 @@
 
 import { StatusBar } from "expo-status-bar"
-import { ActivityIndicator, StyleSheet, View,Text } from "react-native"
+import { ActivityIndicator, StyleSheet, View,Text, TouchableOpacity } from "react-native"
 import Header from "../componants/Header"
 import Main from "../componants/Main"
 import Randomdish from "../componants/Randomdish"
@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux"
 import { useEffect, useState } from "react"
 import { load } from "../store/item_reducer"
 import { data } from '../dymmydata.js'
+import { router } from "expo-router"
 
 export default function App() {
   const dispatch = useDispatch()
@@ -46,6 +47,22 @@ export default function App() {
                 Available Recipies
               </Text>
               <Main />
+              <TouchableOpacity
+                
+                onPress={()=>router.push('/saved')}
+              
+                activeOpacity={0.5} style={{
+                backgroundColor: '#FFF',
+                width: 70,
+                height: 70,
+                position: 'absolute',
+                bottom: 20,
+                right: 20,
+                zIndex: 1000,
+                borderRadius:9999,
+              }}>
+
+              </TouchableOpacity>
           </>
         )
       }
