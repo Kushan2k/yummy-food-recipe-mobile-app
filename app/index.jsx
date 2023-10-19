@@ -9,6 +9,7 @@ import { useEffect, useState } from "react"
 import { load } from "../store/item_reducer"
 import { data } from '../dymmydata.js'
 import { router } from "expo-router"
+import { Ionicons } from '@expo/vector-icons';
 
 export default function App() {
   const dispatch = useDispatch()
@@ -16,7 +17,7 @@ export default function App() {
   useEffect(() => {
     
     setTimeout(() => {
-      dispatch(load({items:data}))
+      dispatch(load({items:data,saved:[]}))
       setloading(false)
     }, 2000);
     
@@ -49,19 +50,25 @@ export default function App() {
               <Main />
               <TouchableOpacity
                 
+                
+                
                 onPress={()=>router.push('/saved')}
               
-                activeOpacity={0.5} style={{
-                backgroundColor: '#FFF',
-                width: 70,
-                height: 70,
+                activeOpacity={0.5}
+                style={{
+                  
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent:'center',
+                width: 60,
+                height: 60,
                 position: 'absolute',
                 bottom: 20,
                 right: 20,
                 zIndex: 1000,
                 borderRadius:9999,
               }}>
-
+                <Ionicons name="save-sharp" size={50} color="white" />
               </TouchableOpacity>
           </>
         )

@@ -1,4 +1,4 @@
-import {FlatList} from 'react-native'
+import {FlatList, Text} from 'react-native'
 import React from 'react'
 
 import MenuItem from './MenuItem.jsx'
@@ -7,10 +7,13 @@ import { useSelector } from 'react-redux'
 
 export default function Main() {
 
-  const items = useSelector((state) => state.item)
+  const items = useSelector((state) => state.item.items)
+
+ 
   
   
   return (
+    
     <FlatList
       
       bounces

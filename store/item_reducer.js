@@ -1,6 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit"
 
-const initialState = []
+const initialState = {
+  items: [],
+  saved: [],
+}
 
 const Reducer = createSlice({
   name: "item",
@@ -8,7 +11,10 @@ const Reducer = createSlice({
   reducers: {
     load(state, action) {
       // console.log(action.payload)
-      return [...action.payload?.items]
+      return {
+        items: [...action.payload?.items],
+        saved: [...action.payload?.saved],
+      }
     },
   },
 })
