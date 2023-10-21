@@ -23,14 +23,18 @@ export default function App() {
 
   function getSavedItems() {
     
-    items.forEach(async(item) => {
+    items.forEach(async (item) => {
+
       try {
-        const i = await SecureStore.getItemAsync(item.id)
-        if (i) {
+
+        const i=await SecureStore.getItemAsync(item?.id)
+        
+        if (item) {
+          console.log('found')
           saved.push(item)
         }
       } catch (e) {
-        
+        console.log(e.message)
       }
     })
 

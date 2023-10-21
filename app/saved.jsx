@@ -11,9 +11,9 @@ export default function SavedScreen() {
   return (
     <View>
 
-      <Stack.Screen options={{ headerShown: true, title: 'Saved'}}>
+      <Stack.Screen  options={{ headerShown: true, title: 'Saved'}}/>
         
-      </Stack.Screen>
+      
       <Text>saved</Text>
       
     </View>
