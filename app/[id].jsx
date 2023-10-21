@@ -6,24 +6,38 @@ import { StatusBar } from 'expo-status-bar';
 import { useSelector } from 'react-redux';
 import { AntDesign } from '@expo/vector-icons';
 import DetailItem from '../componants/DetailItem';
-import { Entypo } from '@expo/vector-icons';
+
 import * as SecureStore from 'expo-secure-store';
+import { FontAwesome } from '@expo/vector-icons';
 
 export default function itemdetails() {
 
   const { id } = useGlobalSearchParams()
 
-  const [loading,setloading]=useState(true)
+  const [loading, setloading] = useState(true)
+  const [issaved,setsaved]=useState(false)
   
   const data = useSelector(state => state.item.items)
 
-  const [item,setitem]=useState({})
+  const [item, setitem] = useState({})
+  
+  async function checkitem() {
+    
+    const item = await SecureStore.getItemAsync(id)
+    
+    if (item) {
+      setsaved(true)
+    }
+  }
   
   useEffect(() => {
     setitem(data.filter((i) => i.id === parseInt(id))[0])
     if (item) {
       setloading(false)
     }
+
+    checkitem()
+
     
   }, [])
   
@@ -35,8 +49,17 @@ export default function itemdetails() {
       return
     }
     await SecureStore.setItemAsync(id, JSON.stringify(item))
-    ToastAndroid.show("item saved",ToastAndroid.SHORT)
+    ToastAndroid.show("item saved", ToastAndroid.SHORT)
     
+    setsaved(true)
+    
+  }
+
+  async function rmitem() {
+    
+    await SecureStore.deleteItemAsync(id)
+    setsaved(false)
+    ToastAndroid.show("item removed!",ToastAndroid.SHORT)
   }
 
   
@@ -57,7 +80,21 @@ export default function itemdetails() {
         </Pressable>
       </View>
 
-      <View style={{
+      {
+        issaved ? (
+          <View style={{
+            position: 'absolute',
+            top: 50,
+            right: 20,
+            zIndex:200
+            
+          }}>
+            <Pressable style={{ marginHorizontal: 5 }} onPress={rmitem}>
+              <FontAwesome name="bookmark" size={35} color="white" />
+            </Pressable>
+          </View>
+        ) : (
+            <View style={{
         position: 'absolute',
         top: 50,
         right: 20,
@@ -65,9 +102,11 @@ export default function itemdetails() {
         
       }}>
         <Pressable style={{ marginHorizontal: 5 }} onPress={saveItem}>
-          <Entypo name="bookmarks" size={35} color="white" />
+          <FontAwesome name="bookmark-o" size={35} color="white" />
         </Pressable>
       </View>
+        )
+      }
 
       <StatusBar style='auto' />
       
