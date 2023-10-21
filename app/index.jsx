@@ -4,23 +4,48 @@ import { ActivityIndicator, StyleSheet, View,Text, TouchableOpacity } from "reac
 import Header from "../componants/Header"
 import Main from "../componants/Main"
 import Randomdish from "../componants/Randomdish"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useState } from "react"
 import { load } from "../store/item_reducer"
 import { data } from '../dymmydata.js'
 import { router } from "expo-router"
 import { Ionicons } from '@expo/vector-icons';
+import * as SecureStore from 'expo-secure-store';
 
 export default function App() {
   const dispatch = useDispatch()
-  const [loading,setloading]=useState(true)
-  useEffect(() => {
+  const [loading, setloading] = useState(true)
+
+
+  const items = useSelector(state => state.item.items)
+  let saved=[]
+  
+
+  function getSavedItems() {
     
+    items.forEach(async(item) => {
+      try {
+        const i = await SecureStore.getItemAsync(item.id)
+        if (i) {
+          saved.push(item)
+        }
+      } catch (e) {
+        
+      }
+    })
+
+
+  }
+
+  useEffect(() => {
+
+    dispatch(load({items:data,saved:[]}))
+    
+    getSavedItems()
     setTimeout(() => {
-      dispatch(load({items:data,saved:[]}))
+      dispatch(load({items:data,saved:saved}))
       setloading(false)
     }, 2000);
-    
     
   },[])
 
