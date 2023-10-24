@@ -6,11 +6,12 @@ import { StatusBar } from 'expo-status-bar';
 import { useSelector } from 'react-redux';
 import { AntDesign } from '@expo/vector-icons';
 import DetailItem from '../componants/DetailItem';
-
-import * as SecureStore from 'expo-secure-store';
 import { FontAwesome } from '@expo/vector-icons';
+import useDB from '../utils/usedb'
 
 export default function itemdetails() {
+
+  const db=useDB()
 
   const { id } = useGlobalSearchParams()
 
@@ -23,11 +24,13 @@ export default function itemdetails() {
   
   async function checkitem() {
     
-    const item = await SecureStore.getItemAsync(id)
-    
-    if (item) {
-      setsaved(true)
-    }
+    db.transaction(tx => {
+      tx.executeSql("SELECT id FROM saved WHERE item=?", [parseInt(id)], (t, r) => {
+        if (r.rows._array.length > 0) {
+          setsaved(true)
+        }
+      })
+    })
   }
   
   useEffect(() => {
@@ -42,24 +45,54 @@ export default function itemdetails() {
   }, [])
   
   async function saveItem() {
-    const isfound = await SecureStore.getItemAsync(id)
+
+    db.transaction(tx => {
+
+      tx.executeSql("SELECT id FROM saved WHERE item=?", [parseInt(id)], (t, r) => {
+        
+        if (r.rows._array.length > 0) {
+          setsaved(true)
+          ToastAndroid.show("Already saved item found!", ToastAndroid.SHORT)
+          return
+        }
+        tx.executeSql("INSERT INTO saved(item) VALUES(?)", [parseInt(id)], (t, r) => {
+          setsaved(true)
+          ToastAndroid.show("item saved", ToastAndroid.SHORT)
+          return
+        })
+      })
+      
+      
+    })
     
-    if (isfound) {
-      ToastAndroid.show("Already saved item found!", ToastAndroid.SHORT)
-      return
-    }
-    await SecureStore.setItemAsync(id, JSON.stringify(item))
-    ToastAndroid.show("item saved", ToastAndroid.SHORT)
+
+    // const isfound = await SecureStore.getItemAsync(id)
     
-    setsaved(true)
+    // if (isfound) {
+    //   ToastAndroid.show("Already saved item found!", ToastAndroid.SHORT)
+    //   return
+    // }
+    // await SecureStore.setItemAsync(id, JSON.stringify(item))
+    // ToastAndroid.show("item saved", ToastAndroid.SHORT)
+    
     
   }
 
   async function rmitem() {
+
+    db.transaction(tx => {
+      tx.executeSql("DELETE FROM saved WHERE item=?", [parseInt(id)], (t, r) => {
+        if (r.rowsAffected > 0) {
+          setsaved(false)
+          ToastAndroid.show("item removed!",ToastAndroid.SHORT)
+        }
+      })
+    })
     
-    await SecureStore.deleteItemAsync(id)
-    setsaved(false)
-    ToastAndroid.show("item removed!",ToastAndroid.SHORT)
+    // await SecureStore.deleteItemAsync(id)
+    // setsaved(false)
+    // ToastAndroid.show("item removed!",ToastAndroid.SHORT)
+    
   }
 
   

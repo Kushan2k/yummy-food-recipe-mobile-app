@@ -4,44 +4,48 @@ import { ActivityIndicator, StyleSheet, View,Text, TouchableOpacity } from "reac
 import Header from "../componants/Header"
 import Main from "../componants/Main"
 import Randomdish from "../componants/Randomdish"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { useEffect, useState } from "react"
 import { load } from "../store/item_reducer"
 import { data } from '../dymmydata.js'
 import { router } from "expo-router"
 import { Ionicons } from '@expo/vector-icons';
-import * as SecureStore from 'expo-secure-store';
+import useDB from "../utils/usedb"
 
 export default function App() {
   const dispatch = useDispatch()
   const [loading, setloading] = useState(true)
 
-
-  const items = useSelector(state => state.item.items)
+  const db=useDB()
   let saved=[]
   
 
   function getSavedItems() {
     
-    items.forEach(async (item) => {
-
-      try {
-
-        const i=await SecureStore.getItemAsync(item?.id)
-        
-        if (item) {
-          console.log('found')
-          saved.push(item)
+    db.transaction(tx => {
+      tx.executeSql("SELECT item FROM saved", [], (t, r) => {
+        if (r.rows._array.length > 0) {
+          r.rows._array.forEach(row => {
+            saved.push(row.item)
+          })
         }
-      } catch (e) {
-        console.log(e.message)
-      }
+      })
     })
 
 
   }
 
+  async function createDB() {
+    
+    db.transaction(tx => {
+      tx.executeSql("CREATE TABLE IF NOT EXISTS saved(id INTEGER PRIMARY KEY AUTOINCREMENT ,item INTEGER NOT NULL)")
+    })
+    
+  }
+
   useEffect(() => {
+
+    createDB()
 
     dispatch(load({items:data,saved:[]}))
     
